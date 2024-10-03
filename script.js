@@ -286,6 +286,8 @@ function resetGame() {
 
   //reset stored values
   results = [];
+  document.getElementById("resultTable").classList.remove("result-container");
+
   UpdateTable();
 
   // remove overlay and alert on reset
