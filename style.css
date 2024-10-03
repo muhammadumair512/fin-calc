@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   font: 62.5%;
 }
@@ -335,7 +339,7 @@ input[type="number"]:focus {
 
 .result-cell {
   flex: 1;
-  padding: 12px;
+  padding: 8px;
   text-align: center;
   /* font-size: 1rem; */
   background-color: var(--fgcolor);
@@ -343,7 +347,7 @@ input[type="number"]:focus {
 
 .hcell {
   font-weight: bold;
-  letter-spacing: 2px;
+  /* letter-spacing: 2px; */
   font-size: 0.3rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -352,8 +356,20 @@ input[type="number"]:focus {
 }
 @media (max-width: 530px) {
   .hcell {
-    word-break: break-all;
-    hyphens: auto;
+    /* word-break: break-all;
+    hyphens: auto; */
+    font-size: 0.05rem;
+    /* text-align: left; */
+  }
+  .result-container {
+    padding: 0;
+  }
+  .result-cont {
+    padding: 0;
+    margin: 0;
+  }
+  .result-cell {
+    padding: 0;
   }
 }
 
