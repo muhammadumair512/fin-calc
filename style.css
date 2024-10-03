@@ -291,6 +291,9 @@ input[type="number"]:focus {
 }
 /* for result table */
 .result-container {
+  align-items: stretch;
+  overflow: hidden;
+
   background-color: var(--fgcolor);
   border-radius: 12px;
   max-width: 1200px;
@@ -327,7 +330,7 @@ input[type="number"]:focus {
 }
 
 .header-row {
-  background-color: var(--fgcolor);
+  /* background-color: var(--fgcolor); */
 }
 
 .result-cell {
@@ -341,9 +344,17 @@ input[type="number"]:focus {
 .hcell {
   font-weight: bold;
   letter-spacing: 2px;
-  font-size: 1rem;
-  width: auto;
+  font-size: 0.3rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  /* width: auto; */
   /* background-color: var(--bgcolor); */
+}
+@media (max-width: 530px) {
+  .hcell {
+    word-break: break-all;
+    hyphens: auto;
+  }
 }
 
 /* For smaller screens */
