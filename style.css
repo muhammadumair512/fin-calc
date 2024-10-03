@@ -1,0 +1,365 @@
+html {
+  font: 62.5%;
+}
+:root {
+  --fontcolor: rgb(16, 0, 0);
+  --bgcolor: rgb(255, 255, 255);
+  --fgcolor: rgb(218, 221, 225);
+  --fontfamily: Montserrat, sans-serif;
+  --labelfsize: clamp(0.8rem, 0.75rem + 0.6vw, 1.125rem);
+  --labelfweight: 600;
+  --inputfsize: clamp(0.75rem, 0.75rem + 0.4vw, 1rem);
+  --buttonfsize: clamp(0.75rem, 0.75rem + 0.4vw, 1rem);
+  --headingfsize: clamp(1.25rem, 1rem + 0.5vw, 2rem);
+  --shadow-light: 0 0 12px 2px rgba(200, 200, 200, 0.1);
+  --shadow-dark: 0 0 12px 2px rgba(0, 0, 0, 0.1);
+  --bradius: 8px;
+  --primary-color: #007bff;
+  --secondary-color: #e9e9e9;
+  --hover-color: #24262a;
+}
+/*  changed btn colors according to selecgion */
+/* Global Styles */
+body {
+  font-family: var(--fontfamily);
+  background-color: var(--bgcolor);
+  margin: 0;
+  padding: 20px;
+  color: var(--fontcolor);
+}
+h3 {
+  font-size: var(--labelfsize);
+  color: black;
+  text-align: center;
+}
+
+/* Container Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: var(--shadow-dark);
+  background-color: var(--fgcolor);
+  border-radius: var(--bradius);
+}
+
+/* Heading Styles */
+h1 {
+  font-size: var(--headingfsize);
+  text-align: center;
+  color: black;
+  margin-bottom: 20px;
+}
+
+#initialValues {
+  font-size: var(--inputfsize);
+  color: rgba(0, 0, 0, 0.8);
+}
+#initialValues span {
+  font-weight: 700;
+}
+.result {
+  font-size: var(--inputfsize);
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.result span {
+  font-weight: 700;
+}
+
+/* Selection Styles */
+.selections {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+/* Selector Styles */
+.policy-selector,
+.economic-condition-selector {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.policy-selector label,
+.economic-condition-selector label {
+  font-size: var(--labelfsize);
+  font-weight: var(--labelfweight);
+  margin-bottom: 8px;
+  display: block;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+select {
+  width: 100%;
+  /* padding: 10px;
+  border-radius: var(--bradius);
+  font-size: var(--inputfsize);
+  */
+  transition: border-color 0.3s ease;
+  outline: none;
+  border: 1px solid #ccc;
+  cursor: pointer;
+
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: var(--inputfsize);
+  text-align: left;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+select:focus {
+  border-color: none;
+  outline: none;
+}
+
+/* Initial Values Styles */
+#initialValues {
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: var(--bradius);
+  box-shadow: var(--shadow-light);
+  margin-bottom: 20px;
+}
+
+/* Outputs Styles */
+#gameOutputs {
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: var(--bradius);
+  box-shadow: var(--shadow-light);
+  margin-bottom: 20px;
+}
+
+/* Progress Styles */
+.progress-container {
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: var(--bradius);
+  box-shadow: var(--shadow-light);
+  margin-bottom: 20px;
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+  background-color: #f3f3f3;
+  border-radius: var(--bradius);
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-bar-fill {
+  background-color: var(--primary-color);
+  height: 20px;
+  text-align: center;
+  color: #fff;
+  line-height: 20px;
+}
+
+/* Button Styles */
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--bradius);
+  padding: 10px 20px;
+  font-size: var(--buttonfsize);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px 5px;
+  /* minwidth: 80px; */
+}
+
+button:hover {
+  background-color: blue;
+}
+
+/* input fields design */
+
+input[type="number"] {
+  width: 70%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: var(--bradius);
+  font-size: var(--inputfsize);
+  font-family: var(--fontfamily);
+  background-color: var(--bgcolor);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+input[type="number"]:focus {
+  outline: none; /* Remove default outline */
+}
+.toggle-button {
+  min-width: 80px;
+  background-color: #7d8996;
+  color: white;
+  border: none;
+  border-radius: var(--bradius);
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: var(--inputfsize);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.toggle-button:hover {
+  background-color: #5f6a7e;
+}
+/* .toggle-button:active {
+  transform: scale(0.95);
+} */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .selections {
+    flex-direction: column;
+  }
+
+  .policy-selector,
+  .economic-condition-selector {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 1rem + 1vw, 2rem);
+  }
+  /* Input Styles */
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* margin-bottom: 20px; */
+  }
+}
+/* Style for the overlay */
+.custom-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above everything else */
+}
+
+/* Style for the alert box */
+.custom-alert-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1001; /* Ensure it's on top of the overlay */
+}
+
+/* Style for the reset button */
+/* .custom-alert-box button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+} */
+
+/* .custom-alert-box button:hover {
+  background-color: #45a049;
+} */
+
+/* Text style */
+.custom-alert-box p {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.inputs {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+/* for result table */
+.result-container {
+  background-color: var(--fgcolor);
+  border-radius: 12px;
+  max-width: 1200px;
+  /* margin-top: 20px; */
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: var(--shadow-dark);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.result-cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  margin: auto;
+  /* background: var(--bgcolor); */
+  /* border: 1px solid rgba(200, 200, 200, 0.05); */
+  box-shadow: var(--shadow-light);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  /* border-bottom: 1px solid rgba(200, 200, 200, 0.2); */
+}
+
+.header-row {
+  background-color: var(--fgcolor);
+}
+
+.result-cell {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  font-size: 1rem;
+  background-color: var(--fgcolor);
+}
+
+.hcell {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 1rem;
+  width: auto;
+  /* background-color: var(--bgcolor); */
+}
+
+/* For smaller screens */
+/* @media (max-width: 600px) {
+  .result-row {
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .result-cell {
+    padding: 8px;
+    width: 100%;
+  }
+
+  .hcell {
+    background-color: rgba(200, 200, 200, 0.2);
+    width: 100%;
+    padding: 8px;
+    font-size: 1.1em;
+  }
+} */

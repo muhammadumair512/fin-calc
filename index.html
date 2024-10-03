@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Simulation</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Financial Simulation</h1>
+
+      <div class="selections">
+        <div class="policy-selector">
+          <label for="policyType">Choose Policy Type:</label>
+          <select id="policyType">
+            <option value="">Choose Policy Type</option>
+            <option value="monetary">Monetary Policy</option>
+            <option value="fiscal">Fiscal Policy</option>
+            <option value="both">Both (Monetary & Fiscal)</option>
+          </select>
+        </div>
+        <div class="economic-condition-selector">
+          <label for="economicCondition">Choose Economic Condition</label>
+          <select id="economicCondition">
+            <option value="">Choose Economic Condition</option>
+            <option value="recession">Recession</option>
+            <option value="inflation">Inflation</option>
+            <option value="hyperinflation">Hyperinflation</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="initialValues" style="display: none">
+        <h3>Initial Economic Values</h3>
+        <p>Real GDP: <span id="initialGDP">0.00</span>%</p>
+        <p>
+          Unemployment:
+          <span id="initialUnemployment">0.00</span>%
+        </p>
+        <p>Inflation: <span id="initialInflation">0.00</span>%</p>
+      </div>
+
+      <div id="gameInputs" class="inputs" style="display: none"></div>
+
+      <div id="gameOutputs" class="outputs" style="display: none">
+        <h3>Economic Outcomes After Round</h3>
+        <div class="result">
+          <p>Real GDP: <span id="outputGDP">0.00</span>%</p>
+          <p>
+            Unemployment:
+            <span id="outputUnemployment">0.00</span>%
+          </p>
+          <p>Inflation:<span id="outputInflation">0.00</span>%</p>
+        </div>
+      </div>
+
+      <div id="progress" class="progress-container" style="display: none">
+        <h3>Annual Progress</h3>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <p>Year: <span id="iterationCount">0</span>/10</p>
+      </div>
+
+      <div id="buttons" style="display: none">
+        <button id="submitButton" onclick="playGame()">Submit Changes</button>
+        <button onclick="alertt()">Reset</button>
+      </div>
+    </div>
+    <div id="customAlertOverlay" class="custom-alert-overlay">
+      <div class="custom-alert-box">
+        <h3 id="alertMessage">Game Over</h3>
+
+        <!--  outputs inside div in alert -->
+        <div id="gameOutputs" class="outputs">
+          <h3>Final Results</h3>
+          <div class="result">
+            <p>Real GDP: <span id="outputGDP2">0.00</span>%</p>
+            <p>
+              Unemployment:
+              <span id="outputUnemployment2">0.00</span>%
+            </p>
+            <p>Inflation:<span id="outputInflation2">0.00</span>%</p>
+          </div>
+        </div>
+        <button onclick="resetGame()">Reset</button>
+      </div>
+    </div>
+
+    <!-- rsults table -->
+
+    <div class="visible" id="resultTable">
+      <div id="dynamic-table" class="result-cont">
+        <!-- Dynamic content will be generated here -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
