@@ -289,6 +289,9 @@ function resetGame() {
   iteration = 0;
   selectedButtons = {}; // Clear selected buttons on reset
   inputValues = {}; // Clear fixed input values on reset
+  // clear progress bar
+  const iterationCount = document.getElementById("iterationCount");
+  iterationCount.textContent = iteration;
 
   //reset stored values
   results = [];

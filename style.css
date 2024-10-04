@@ -22,7 +22,7 @@ html {
   --secondary-color: #e9e9e9;
   --hover-color: #24262a;
 }
-/*  changed btn colors according to selecgion */
+/*  changed btn colors according to selection */
 /* Global Styles */
 body {
   font-family: var(--fontfamily);
@@ -35,6 +35,7 @@ h3 {
   font-size: var(--headingfsize);
   color: black;
   text-align: center;
+  margin: 1rem 0 2rem;
 }
 
 /* Container Styles */
@@ -52,7 +53,7 @@ h1 {
   font-size: var(--headingfsize);
   text-align: center;
   color: black;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 #initialValues {
@@ -62,9 +63,22 @@ h1 {
 #initialValues span {
   font-weight: 700;
 }
+
 .result {
   font-size: var(--inputfsize);
   color: rgba(0, 0, 0, 0.8);
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: var(--bradius);
+  box-shadow: var(--shadow-light);
+  margin-bottom: 20px;
+  width: 40%;
+  margin: 1rem auto 2rem;
+}
+
+.result p {
+  display: flex;
+  justify-content: space-between;
 }
 
 .result span {
@@ -75,7 +89,7 @@ h1 {
 .selections {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 /* Selector Styles */
@@ -96,15 +110,10 @@ h1 {
 
 select {
   width: 100%;
-  /* padding: 10px;
-  border-radius: var(--bradius);
-  font-size: var(--inputfsize);
-  */
   transition: border-color 0.3s ease;
   outline: none;
   border: 1px solid #ccc;
   cursor: pointer;
-
   padding: 8px 16px;
   border-radius: 4px;
   font-size: var(--inputfsize);
@@ -127,12 +136,20 @@ select:focus {
   border-radius: var(--bradius);
   box-shadow: var(--shadow-light);
   margin-bottom: 20px;
+  width: 40%;
+  margin: 0 auto;
+}
+
+#initialValues p {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 /* Outputs Styles */
 #gameOutputs {
-  background-color: var(--secondary-color);
-  padding: 20px;
+  /* background-color: var(--secondary-color); */
+  padding: 20px 0;
   border-radius: var(--bradius);
   box-shadow: var(--shadow-light);
   margin-bottom: 20px;
@@ -174,7 +191,6 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin: 10px 5px;
-  /* minwidth: 80px; */
 }
 
 button:hover {
@@ -184,7 +200,7 @@ button:hover {
 /* input fields design */
 
 input[type="number"] {
-  width: 70%;
+  width: 100%;
   padding: 12px 15px;
   border: 1px solid #ccc;
   border-radius: var(--bradius);
@@ -194,9 +210,11 @@ input[type="number"] {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 20px;
 }
+
 input[type="number"]:focus {
   outline: none; /* Remove default outline */
 }
+
 .toggle-button {
   min-width: 80px;
   background-color: #7d8996;
@@ -211,43 +229,13 @@ input[type="number"]:focus {
 .toggle-button:hover {
   background-color: #5f6a7e;
 }
-/* .toggle-button:active {
-  transform: scale(0.95);
-} */
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .selections {
-    flex-direction: column;
-  }
-
-  .policy-selector,
-  .economic-condition-selector {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  .container {
-    padding: 10px;
-  }
-
-  h1 {
-    font-size: clamp(1.5rem, 1rem + 1vw, 2rem);
-  }
-  /* Input Styles */
-  /* .toggle-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  } */
-}
 
 /* adjusting input fields */
 .toggle-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 20px;
 }
 
@@ -257,24 +245,7 @@ input[type="number"]:focus {
   align-content: center;
   /* margin-top: 0px; */
 }
-@media (max-width: 768px) {
-  .toggle-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    margin-top: 20px;
-  }
-  .toggle-container input {
-    width: 100%;
-  }
-  .button-container {
-    align-items: flex-start;
-    margin-top: 0;
-  }
-  .toggle-container label {
-    margin-bottom: 20px;
-  }
-}
+
 /* Style for the overlay */
 .custom-alert-overlay {
   position: fixed;
@@ -293,27 +264,13 @@ input[type="number"]:focus {
 .custom-alert-box {
   background-color: white;
   padding: 20px;
+  /* max-width: 500px; */
+  width: 60%;
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1001; /* Ensure it's on top of the overlay */
 }
-
-/* Style for the reset button */
-/* .custom-alert-box button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #4caf50;
-  color: white;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
-} */
-
-/* .custom-alert-box button:hover {
-  background-color: #45a049;
-} */
 
 /* Text style */
 .custom-alert-box p {
@@ -338,7 +295,7 @@ input[type="number"]:focus {
   margin: 20px auto;
   padding: 20px;
   box-shadow: var(--shadow-dark);
-  display: flex;
+  display: none;
   justify-content: center;
   align-content: center;
   font-size: var(--inputfsize);
@@ -349,8 +306,6 @@ input[type="number"]:focus {
   width: 100%;
   height: auto;
   margin: auto;
-  /* background: var(--bgcolor); */
-  /* border: 1px solid rgba(200, 200, 200, 0.05); */
   box-shadow: var(--shadow-light);
   backdrop-filter: blur(10px);
   border-radius: 12px;
@@ -366,33 +321,106 @@ input[type="number"]:focus {
   /* border-bottom: 1px solid rgba(200, 200, 200, 0.2); */
 }
 
-.header-row {
-  /* background-color: var(--fgcolor); */
-}
-
 .result-cell {
   flex: 1;
   padding: 8px;
   text-align: center;
-  /* font-size: 1rem; */
   background-color: var(--fgcolor);
 }
 
 .hcell {
   font-weight: bold;
-  /* letter-spacing: 2px; */
   font-size: 1.3rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  /* width: auto; */
-  /* background-color: var(--bgcolor); */
 }
+
+.SubmitBtns {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+
+.finalize {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+.finalize:hover {
+  background-color: red;
+}
+
+/* Responsive Design */
+
+@media screen and (max-width: 1100px) {
+  .result,
+  #initialValues {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .selections {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+
+  .policy-selector,
+  .economic-condition-selector {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 1rem + 1vw, 2rem);
+  }
+
+  .toggle-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 20px;
+  }
+  .toggle-container input {
+    width: 100%;
+  }
+  .button-container {
+    align-items: flex-start;
+    margin-top: 0;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .toggle-container label {
+    margin-bottom: 20px;
+  }
+
+  .result,
+  #initialValues {
+    width: 100%;
+  }
+  #gameOutputs {
+    padding: 20px 0;
+    margin-bottom: 20px;
+  }
+  input[type="number"] {
+    margin-bottom: 4px;
+  }
+  #initialValues {
+    margin-top: 30px;
+  }
+  .inputs {
+    margin: 30px 0;
+  }
+}
+
 @media (max-width: 530px) {
   .hcell {
-    /* word-break: break-all;
-    hyphens: auto; */
     font-size: 0.8rem;
-    /* text-align: left; */
   }
   .result-container {
     padding: 0;
@@ -404,40 +432,7 @@ input[type="number"]:focus {
   .result-cell {
     padding: 0;
   }
-}
-
-/* For smaller screens */
-/* @media (max-width: 600px) {
-  .result-row {
-    flex-direction: column;
-    text-align: left;
+  .custom-alert-box {
+    width: 90%;
   }
-
-  .result-cell {
-    padding: 8px;
-    width: 100%;
-  }
-
-  .hcell {
-    background-color: rgba(200, 200, 200, 0.2);
-    width: 100%;
-    padding: 8px;
-    font-size: 1.1em;
-  }
-} */
-
-.SubmitBtns {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  /* justify-content: space-between; */
-  /* background-color: red; */
-}
-.finalize {
-  background-color: rgba(255, 0, 0, 0.457);
-}
-.finalize:hover {
-  background-color: red;
 }
