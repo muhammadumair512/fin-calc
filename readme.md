@@ -8,5 +8,7 @@
 8. winning conditions can be changed in code via following below instructions:-
    a. open script.js file using any text / code editor ( like notepad, VS code etc)
    b. search for (press ctrl + f on windows / command + f on mac ) ' winning criteria '  
-   c. a piece of code (as shown in attached .png) will be shown you can ammend it to change winning criteria
-9. thank you.
+    c. a piece of code (as shown in attached .png) will be shown you can ammend it to change winning criteria
+9. user can finish simulation if he has achieved results at any stage by pressing reset button
+10. all simulations results are shown in table at bottom
+11. thank you.

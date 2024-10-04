@@ -86,21 +86,25 @@ function setupPolicyInputs(policyType) {
       <label for="discountRate">Discount Rate (%):</label>
       <div class="toggle-container">
           <input  type="number" id="discountRate" step="0.01" min="0" />
-          <button class="toggle-button" onclick="toggleButton('discountRate', 1, this)">+</button>
-          <button class="toggle-button" onclick="toggleButton('discountRate', -1, this)">-</button>
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('discountRate', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('discountRate', -1, this)">-</button>
+          </div>
       </div>
       <label for="reserveRequirement">Reserve Requirement (%):</label>
       <div class="toggle-container">
           <input type="number" id="reserveRequirement" step="1" min="0" />
-          <button class="toggle-button" onclick="toggleButton('reserveRequirement', 1, this)">+</button>
-          <button class="toggle-button" onclick="toggleButton('reserveRequirement', -1, this)">-</button>
-      </div>
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('reserveRequirement', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('reserveRequirement', -1, this)">-</button>
+          </div> </div>
        <label for="marketOperation">Open Market Operations (%):</label>
       <div class="toggle-container">
           <input type="number" id="marketOperation" min="0" step="1" />
-          <button class="toggle-button" onclick="toggleButton('marketOperation', 1, this)">Buy</button>
-          <button class="toggle-button" onclick="toggleButton('marketOperation', -1, this)">Sell</button>
-      </div>
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('marketOperation', 1, this)">Buy</button>
+            <button class="toggle-button" onclick="toggleButton('marketOperation', -1, this)">Sell</button>
+          </div> </div>
     `;
   }
   if (policyType === "fiscal" || policyType === "both") {
@@ -109,15 +113,17 @@ function setupPolicyInputs(policyType) {
       <label for="taxChange">Tax Change (%):</label>
       <div class="toggle-container">
           <input type="number" id="taxChange" min="0" step="0.01" />
-          <button class="toggle-button" onclick="toggleButton('taxChange', 1, this)">+</button>
-          <button class="toggle-button" onclick="toggleButton('taxChange', -1, this)">-</button>
-      </div>
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('taxChange', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('taxChange', -1, this)">-</button>
+          </div>  </div>
       <label for="govSpending">Government Spending (%):</label>
       <div class="toggle-container">
           <input type="number" id="govSpending" step="1" min="0" />
-          <button class="toggle-button" onclick="toggleButton('govSpending', 1, this)">+</button>
-          <button class="toggle-button" onclick="toggleButton('govSpending', -1, this)">-</button>
-      </div>
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('govSpending', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('govSpending', -1, this)">-</button>
+          </div>  </div>
     `;
   }
 

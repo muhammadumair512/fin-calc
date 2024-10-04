@@ -235,11 +235,44 @@ input[type="number"]:focus {
     font-size: clamp(1.5rem, 1rem + 1vw, 2rem);
   }
   /* Input Styles */
-  .toggle-container {
+  /* .toggle-container {
     display: flex;
     align-items: center;
     gap: 20px;
-    /* margin-bottom: 20px; */
+  } */
+}
+
+/* adjusting input fields */
+.toggle-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.button-container {
+  display: flex;
+  margin-bottom: 20px;
+  align-content: center;
+  /* margin-top: 0px; */
+}
+@media (max-width: 768px) {
+  .toggle-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 20px;
+  }
+  .toggle-container input {
+    width: 100%;
+  }
+  .button-container {
+    align-items: flex-start;
+    margin-top: 0;
+  }
+  .toggle-container label {
+    margin-bottom: 20px;
   }
 }
 /* Style for the overlay */
@@ -348,7 +381,7 @@ input[type="number"]:focus {
 .hcell {
   font-weight: bold;
   /* letter-spacing: 2px; */
-  font-size: 0.3rem;
+  font-size: 1.3rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
   /* width: auto; */
@@ -358,7 +391,7 @@ input[type="number"]:focus {
   .hcell {
     /* word-break: break-all;
     hyphens: auto; */
-    font-size: 0.05rem;
+    font-size: 0.8rem;
     /* text-align: left; */
   }
   .result-container {
