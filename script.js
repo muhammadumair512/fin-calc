@@ -70,7 +70,7 @@ function displayInitialValues() {
   document.getElementById("initialInflation").textContent = initialInflation;
   document.getElementById("initialValues").style.display = "block";
   document.getElementById("gameInputs").style.display = "block";
-  document.getElementById("buttons").style.display = "block";
+  document.getElementById("buttons").style.display = "flex";
   document.getElementById("progress").style.display = "block";
   document.getElementById("gameOutputs").style.display = "none";
 }

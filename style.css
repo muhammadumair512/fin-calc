@@ -32,7 +32,7 @@ body {
   color: var(--fontcolor);
 }
 h3 {
-  font-size: var(--labelfsize);
+  font-size: var(--headingfsize);
   color: black;
   text-align: center;
 }
@@ -317,7 +317,7 @@ input[type="number"]:focus {
 
 /* Text style */
 .custom-alert-box p {
-  font-size: 20px;
+  font-size: var(--labelfsize);
   color: #333;
   margin-bottom: 20px;
 }
@@ -425,3 +425,19 @@ input[type="number"]:focus {
     font-size: 1.1em;
   }
 } */
+
+.SubmitBtns {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  /* justify-content: space-between; */
+  /* background-color: red; */
+}
+.finalize {
+  background-color: rgba(255, 0, 0, 0.457);
+}
+.finalize:hover {
+  background-color: red;
+}
