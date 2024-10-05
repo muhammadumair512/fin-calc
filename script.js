@@ -2,6 +2,7 @@ let initialGDP, initialUnemployment, initialInflation;
 let realGDP, unemployment, inflation;
 let iteration = 0;
 let R;
+let resultObj;
 let results = [];
 // Track selected buttons for each input
 let selectedButtons = {};
@@ -60,6 +61,20 @@ function generateInitialValues(economicCondition) {
     initialGDP = (Math.random() * 50 + 50).toFixed(2);
     initialUnemployment = 0;
     initialInflation = (Math.random() * 300 + 500).toFixed(2);
+  }
+
+  if (results.length === 0) {
+    resultObj = {
+      Year: 0,
+      GDP: initialGDP,
+      Unemployment: initialUnemployment,
+      Inflation: initialInflation,
+    };
+
+    results.push(resultObj);
+    UpdateTable();
+
+    console.log(results);
   }
 }
 
@@ -225,16 +240,18 @@ function playGame() {
   iteration++;
 
   // show all results
-  let resultObj = {
+
+  resultObj = {
     Year: iteration,
     GDP: realGDP,
     Unemployment: unemployment,
     Inflation: inflation,
   };
+
   results.push(resultObj);
   UpdateTable();
 
-  console.log(results);
+  // console.log(results);
 
   // update all results on browser
 
@@ -336,6 +353,7 @@ function alertt(message) {
 // Initial array with objects
 
 // Function to update the table dynamically
+
 function UpdateTable() {
   const tableContainer = document.getElementById("dynamic-table");
   tableContainer.innerHTML = ""; // Clear any existing content
