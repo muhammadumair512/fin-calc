@@ -170,21 +170,31 @@ function getInputValue(id) {
 function toggleButton(id, value, button) {
   const input = document.getElementById(id);
 
+  // Get the current value, consider it positive by default
   let currentValue = parseFloat(input.value) || 0;
 
+  // If no button has been pressed for this input, assume the value is positive
+  if (!(id in selectedButtons)) {
+    inputValues[id] = Math.abs(currentValue); // Default to positive
+  }
+
+  // Apply the corresponding sign (+ or -) based on the pressed button
   if (selectedButtons[id] !== button) {
-    // Apply the corresponding sign (+ or -) to the current value
     inputValues[id] =
       value > 0 ? Math.abs(currentValue) : -Math.abs(currentValue);
   }
 
+  // Reset the color of the previously selected button (if any)
   if (selectedButtons[id]) {
-    selectedButtons[id].style.backgroundColor = ""; // Reset the color of the previously selected button
+    selectedButtons[id].style.backgroundColor = "";
   }
-  selectedButtons[id] = button; // Track the currently selected button
-  button.style.backgroundColor = value > 0 ? "blue" : "red"; // Blue for +, Red for -
 
-  input.value = Math.abs(inputValues[id]); // Keep the input value always positive
+  // Track the currently selected button and set its color
+  selectedButtons[id] = button;
+  button.style.backgroundColor = value > 0 ? "blue" : "red";
+
+  // Always show the positive value in the input field
+  input.value = Math.abs(inputValues[id]);
 }
 
 function playGame() {
@@ -195,11 +205,32 @@ function playGame() {
   displayInitialValues();
   // console.log(initialGDP, initialUnemployment, initialInflation);
 
-  const discountRate = inputValues["discountRate"] || 0;
-  const reserveRequirement = inputValues["reserveRequirement"] || 0;
-  const marketOperation = inputValues["marketOperation"] || 0;
-  const taxChange = inputValues["taxChange"] || 0;
-  const govSpending = inputValues["govSpending"] || 0;
+  const discountRate =
+    inputValues["discountRate"] ||
+    (document.getElementById("discountRate")
+      ? document.getElementById("discountRate").value
+      : 0);
+  const reserveRequirement =
+    inputValues["reserveRequirement"] ||
+    (document.getElementById("reserveRequirement")
+      ? document.getElementById("reserveRequirement").value
+      : 0);
+  const marketOperation =
+    inputValues["marketOperation"] ||
+    (document.getElementById("marketOperation")
+      ? document.getElementById("marketOperation").value
+      : 0);
+
+  const taxChange =
+    inputValues["taxChange"] ||
+    (document.getElementById("taxChange")
+      ? document.getElementById("taxChange").value
+      : 0);
+  const govSpending =
+    inputValues["govSpending"] ||
+    (document.getElementById("govSpending")
+      ? document.getElementById("govSpending").value
+      : 0);
 
   realGDP = (
     initialGDP -
@@ -231,6 +262,14 @@ function playGame() {
   if (isNaN(unemployment)) {
     unemployment = 0;
   }
+
+  realGDP = realGDP;
+  if (unemployment < 0) {
+    unemployment = 0;
+  } else {
+    unemployment = unemployment;
+  }
+  inflation = inflation;
 
   document.getElementById("outputGDP").textContent = realGDP;
   document.getElementById("outputUnemployment").textContent = unemployment;

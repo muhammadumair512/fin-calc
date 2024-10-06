@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Simulation</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font: 62.5%;
+      }
+      :root {
+        --fontcolor: rgb(16, 0, 0);
+        --bgcolor: rgb(255, 255, 255);
+        --fgcolor: rgb(218, 221, 225);
+        --fontfamily: Montserrat, sans-serif;
+        --labelfsize: clamp(0.8rem, 0.75rem + 0.6vw, 1.125rem);
+        --labelfweight: 600;
+        --inputfsize: clamp(0.75rem, 0.75rem + 0.4vw, 1rem);
+        --buttonfsize: clamp(0.75rem, 0.75rem + 0.4vw, 1rem);
+        --headingfsize: clamp(1.25rem, 1rem + 0.5vw, 2rem);
+        --shadow-light: 0 0 12px 2px rgba(200, 200, 200, 0.1);
+        --shadow-dark: 0 0 12px 2px rgba(0, 0, 0, 0.1);
+        --bradius: 8px;
+        --primary-color: #007bff;
+        --secondary-color: #e9e9e9;
+        --hover-color: #24262a;
+      }
+      /*  changed btn colors according to selection */
+      /* Global Styles */
+      body {
+        font-family: var(--fontfamily);
+        background-color: var(--bgcolor);
+        margin: 0;
+        padding: 20px;
+        color: var(--fontcolor);
+      }
+      h3 {
+        font-size: var(--headingfsize);
+        color: black;
+        text-align: center;
+        margin: 1rem 0 2rem;
+      }
+
+      /* Container Styles */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: var(--shadow-dark);
+        background-color: var(--fgcolor);
+        border-radius: var(--bradius);
+      }
+
+      /* Heading Styles */
+      h1 {
+        font-size: var(--headingfsize);
+        text-align: center;
+        color: black;
+        margin-bottom: 28px;
+      }
+
+      #initialValues {
+        font-size: var(--inputfsize);
+        color: rgba(0, 0, 0, 0.8);
+      }
+      #initialValues span {
+        font-weight: 700;
+      }
+
+      .result {
+        font-size: var(--inputfsize);
+        color: rgba(0, 0, 0, 0.8);
+        background-color: var(--secondary-color);
+        padding: 20px;
+        border-radius: var(--bradius);
+        box-shadow: var(--shadow-light);
+        margin-bottom: 20px;
+        width: 40%;
+        margin: 1rem auto 2rem;
+      }
+
+      .result p {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .result span {
+        font-weight: 700;
+      }
+
+      /* Selection Styles */
+      .selections {
+        display: flex;
+        justify-content: space-evenly;
+        margin-bottom: 30px;
+      }
+
+      /* Selector Styles */
+      .policy-selector,
+      .economic-condition-selector {
+        flex: 1;
+        margin-right: 15px;
+      }
+
+      .policy-selector label,
+      .economic-condition-selector label {
+        font-size: var(--labelfsize);
+        font-weight: var(--labelfweight);
+        margin-bottom: 8px;
+        display: block;
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      select {
+        width: 100%;
+        transition: border-color 0.3s ease;
+        outline: none;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: var(--inputfsize);
+        text-align: left;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      select:focus {
+        border-color: none;
+        outline: none;
+      }
+
+      /* Initial Values Styles */
+      #initialValues {
+        background-color: var(--secondary-color);
+        padding: 20px;
+        border-radius: var(--bradius);
+        box-shadow: var(--shadow-light);
+        margin-bottom: 20px;
+        width: 40%;
+        margin: 0 auto;
+      }
+
+      #initialValues p {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      /* Outputs Styles */
+      #gameOutputs {
+        /* background-color: var(--secondary-color); */
+        padding: 20px 0;
+        border-radius: var(--bradius);
+        box-shadow: var(--shadow-light);
+        margin-bottom: 20px;
+      }
+
+      /* Progress Styles */
+      .progress-container {
+        background-color: var(--secondary-color);
+        padding: 20px;
+        border-radius: var(--bradius);
+        box-shadow: var(--shadow-light);
+        margin-bottom: 20px;
+      }
+
+      /* Progress Bar Styles */
+      .progress-bar {
+        background-color: #f3f3f3;
+        border-radius: var(--bradius);
+        overflow: hidden;
+        margin: 10px 0;
+      }
+
+      .progress-bar-fill {
+        background-color: var(--primary-color);
+        height: 20px;
+        text-align: center;
+        color: #fff;
+        line-height: 20px;
+      }
+
+      /* Button Styles */
+      button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: var(--bradius);
+        padding: 10px 20px;
+        font-size: var(--buttonfsize);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 10px 5px;
+      }
+
+      button:hover {
+        background-color: blue;
+      }
+
+      /* input fields design */
+
+      input[type="number"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: var(--bradius);
+        font-size: var(--inputfsize);
+        font-family: var(--fontfamily);
+        background-color: var(--bgcolor);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 20px;
+      }
+
+      input[type="number"]:focus {
+        outline: none; /* Remove default outline */
+      }
+
+      .toggle-button {
+        min-width: 80px;
+        background-color: #7d8996;
+        color: white;
+        border: none;
+        border-radius: var(--bradius);
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: var(--inputfsize);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .toggle-button:hover {
+        background-color: #5f6a7e;
+      }
+
+      /* adjusting input fields */
+      .toggle-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .button-container {
+        display: flex;
+        margin-bottom: 20px;
+        align-content: center;
+        /* margin-top: 0px; */
+      }
+
+      /* Style for the overlay */
+      .custom-alert-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      /* Style for the alert box */
+      .custom-alert-box {
+        background-color: white;
+        padding: 20px;
+        /* max-width: 500px; */
+        width: 80%;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1001;
+      }
+
+      /* Text style */
+      .custom-alert-box p {
+        font-size: var(--labelfsize);
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .inputs {
+        margin-bottom: 50px;
+        margin-top: 50px;
+      }
+      /* for result table */
+      .result-container {
+        align-items: stretch;
+        overflow: hidden;
+
+        background-color: var(--fgcolor);
+        border-radius: 12px;
+        max-width: 1200px;
+        /* margin-top: 20px; */
+        margin: 20px auto;
+        padding: 20px;
+        box-shadow: var(--shadow-dark);
+        display: none;
+        justify-content: center;
+        align-content: center;
+        font-size: var(--inputfsize);
+      }
+      .result-cont {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        margin: auto;
+        box-shadow: var(--shadow-light);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: var(--inputfsize);
+      }
+
+      .result-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+        /* border-bottom: 1px solid rgba(200, 200, 200, 0.2); */
+      }
+
+      .result-cell {
+        flex: 1;
+        padding: 8px;
+        text-align: center;
+        background-color: var(--fgcolor);
+      }
+
+      .hcell {
+        font-weight: bold;
+        font-size: 1.3rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .SubmitBtns {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 1rem;
+        justify-content: space-between;
+      }
+
+      .finalize {
+        background-color: rgba(255, 0, 0, 0.7);
+      }
+      .finalize:hover {
+        background-color: red;
+      }
+
+      .name-container {
+        width: 100%;
+        margin: 0 auto 2rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .name-container label {
+        font-size: var(--inputfsize);
+        color: rgba(0, 0, 0, 0.6);
+        text-align: left;
+        margin-bottom: 0.4rem;
+      }
+
+      .name-container input {
+        width: 100%;
+        transition: border-color 0.3s ease;
+        outline: none;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: var(--inputfsize);
+        text-align: left;
+        background-color: #f9f9f9;
+      }
+
+      /* Responsive Design */
+
+      @media screen and (max-width: 1100px) {
+        .result,
+        #initialValues {
+          width: 60%;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .selections {
+          flex-direction: column;
+          margin-bottom: 0;
+        }
+
+        .policy-selector,
+        .economic-condition-selector {
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+
+        .container {
+          padding: 10px;
+        }
+
+        h1 {
+          font-size: clamp(1.5rem, 1rem + 1vw, 2rem);
+        }
+
+        .toggle-container {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0;
+          margin-top: 20px;
+        }
+        .toggle-container input {
+          width: 100%;
+        }
+        .button-container {
+          align-items: flex-start;
+          margin-top: 0;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .toggle-container label {
+          margin-bottom: 20px;
+        }
+
+        .result,
+        #initialValues {
+          width: 100%;
+        }
+        #gameOutputs {
+          padding: 20px 0;
+          margin-bottom: 20px;
+        }
+        input[type="number"] {
+          margin-bottom: 4px;
+        }
+        #initialValues {
+          margin-top: 30px;
+        }
+        .inputs {
+          margin: 30px 0;
+        }
+      }
+
+      @media (max-width: 530px) {
+        .hcell {
+          font-size: 0.8rem;
+        }
+        .result-container {
+          padding: 0;
+        }
+        .result-cont {
+          padding: 0;
+          margin: 0;
+        }
+        .result-cell {
+          padding: 0 6px;
+        }
+        .custom-alert-box {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Financial Simulation</h1>
+
+      <div class="selections">
+        <div class="policy-selector">
+          <label for="policyType">Choose Policy Type:</label>
+          <select id="policyType">
+            <option value="">Choose Policy Type</option>
+            <option value="monetary">Monetary Policy</option>
+            <option value="fiscal">Fiscal Policy</option>
+            <option value="both">Both (Monetary & Fiscal)</option>
+          </select>
+        </div>
+        <div class="economic-condition-selector">
+          <label for="economicCondition">Choose Economic Condition</label>
+          <select id="economicCondition">
+            <option value="">Choose Economic Condition</option>
+            <option value="recession">Recession</option>
+            <option value="inflation">Inflation</option>
+            <option value="hyperinflation">Hyperinflation</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="initialValues" style="display: none">
+        <h3>Initial Economic Values</h3>
+        <p>Real GDP (%): <span id="initialGDP">0.00</span></p>
+        <p>
+          Unemployment (%):
+          <span id="initialUnemployment">0.00</span>
+        </p>
+        <p>Inflation (%): <span id="initialInflation">0.00</span></p>
+      </div>
+
+      <div id="gameInputs" class="inputs" style="display: none"></div>
+
+      <div id="progress" class="progress-container" style="display: none">
+        <h3>Annual Progress</h3>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <p>Year: <span id="iterationCount">0</span> / 10</p>
+      </div>
+
+      <div id="buttons" style="display: none" class="SubmitBtns">
+        <button id="submitButton" onclick="playGame()">Calculate</button>
+        <button onclick="alertt()" class="finalize">Finalize</button>
+      </div>
+
+      <div id="gameOutputs" class="outputs" style="display: none">
+        <div class="result">
+          <h3>Economic Outcomes After Round</h3>
+          <p>Real GDP (%): <span id="outputGDP">0.00</span></p>
+          <p>Unemployment (%): <span id="outputUnemployment">0.00</span></p>
+          <p>Inflation (%): <span id="outputInflation">0.00</span></p>
+        </div>
+        <div id="dynamic-table" class="result-cont">
+          <!-- Dynamic content will be generated here -->
+        </div>
+      </div>
+    </div>
+    <div id="customAlertOverlay" class="custom-alert-overlay">
+      <div class="custom-alert-box">
+        <h3 id="alertMessage">Game Over</h3>
+
+        <!--  outputs inside div in alert -->
+        <div id="gameOutputs" class="outputs">
+          <h3>Final Results</h3>
+          <div class="result">
+            <div class="name-container">
+              <label for="name">Name</label>
+              <input type="text" id="name" />
+            </div>
+            <p>Real GDP (%): <span id="outputGDP2">0.00</span></p>
+            <p>Unemployment (%): <span id="outputUnemployment2">0.00</span></p>
+            <p>Inflation (%): <span id="outputInflation2">0.00</span></p>
+          </div>
+        </div>
+        <button onclick="resetGame()">Reset</button>
+      </div>
+    </div>
+
+    <!-- rsults table -->
+
+    <div class="visible" id="resultTable"></div>
+
+    <script>
+      let initialGDP, initialUnemployment, initialInflation;
+      let realGDP, unemployment, inflation;
+      let iteration = 0;
+      let R;
+      let resultObj;
+      let results = [];
+      // Track selected buttons for each input
+      let selectedButtons = {};
+      // Store fixed values based on button clicks
+      let inputValues = {};
+
+      // Attach event listeners for dropdowns
+      document
+        .getElementById("policyType")
+        .addEventListener("change", updateGameVisibility);
+      document
+        .getElementById("economicCondition")
+        .addEventListener("change", updateGameVisibility);
+
+      function updateGameVisibility() {
+        const policyType = document.getElementById("policyType").value;
+        const economicCondition =
+          document.getElementById("economicCondition").value;
+
+        if (policyType) {
+          if (economicCondition) {
+            generateInitialValues(economicCondition);
+            displayInitialValues();
+            setupPolicyInputs(policyType);
+
+            const progressBar = document.getElementById("progressBarFill");
+            progressBar.style.width = "0%";
+            //   progressBar.textContent = "";
+            //   document.getElementById("iterationCount").textContent = "0";
+          } else {
+            resetEconomicValues();
+          }
+        } else {
+          resetGame();
+        }
+      }
+
+      function resetEconomicValues() {
+        document.getElementById("initialValues").style.display = "none";
+        document.getElementById("gameInputs").style.display = "none";
+        document.getElementById("gameOutputs").style.display = "none";
+        document.getElementById("buttons").style.display = "none";
+      }
+
+      function generateInitialValues(economicCondition) {
+        R = Math.floor(Math.random() * 6) + 1;
+        // console.log(R);
+        if (economicCondition === "recession") {
+          initialGDP = (Math.random() * 2 - 3).toFixed(2);
+          initialUnemployment = (Math.random() * 14 + 10).toFixed(2);
+          initialInflation = (Math.random() * 9 - 9).toFixed(2);
+        } else if (economicCondition === "inflation") {
+          initialGDP = (Math.random() * 15 + 5).toFixed(2);
+          initialUnemployment = (Math.random() * 3).toFixed(2);
+          initialInflation = (Math.random() * 13 + 7).toFixed(2);
+        } else if (economicCondition === "hyperinflation") {
+          initialGDP = (Math.random() * 50 + 50).toFixed(2);
+          initialUnemployment = 0;
+          initialInflation = (Math.random() * 300 + 500).toFixed(2);
+        }
+
+        if (results.length === 0) {
+          resultObj = {
+            Year: 0,
+            GDP: initialGDP,
+            Unemployment: initialUnemployment,
+            Inflation: initialInflation,
+          };
+
+          results.push(resultObj);
+          UpdateTable();
+
+          console.log(results);
+        }
+      }
+
+      function displayInitialValues() {
+        document.getElementById("initialGDP").textContent = initialGDP;
+        document.getElementById("initialUnemployment").textContent =
+          initialUnemployment;
+        document.getElementById("initialInflation").textContent =
+          initialInflation;
+        document.getElementById("initialValues").style.display = "block";
+        document.getElementById("gameInputs").style.display = "block";
+        document.getElementById("buttons").style.display = "flex";
+        document.getElementById("progress").style.display = "block";
+        document.getElementById("gameOutputs").style.display = "none";
+      }
+
+      function setupPolicyInputs(policyType) {
+        const gameInputsContainer = document.getElementById("gameInputs");
+        gameInputsContainer.innerHTML = "";
+
+        let inputsHTML = "";
+
+        if (policyType === "monetary" || policyType === "both") {
+          inputsHTML += `
+      <label for="discountRate">Discount Rate (%):</label>
+      <div class="toggle-container">
+          <input  type="number" id="discountRate" step="0.01" min="0" />
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('discountRate', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('discountRate', -1, this)">-</button>
+          </div>
+      </div>
+      <label for="reserveRequirement">Reserve Requirement (%):</label>
+      <div class="toggle-container">
+          <input type="number" id="reserveRequirement" step="1" min="0" />
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('reserveRequirement', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('reserveRequirement', -1, this)">-</button>
+          </div> </div>
+       <label for="marketOperation">Open Market Operations (%):</label>
+      <div class="toggle-container">
+          <input type="number" id="marketOperation" min="0" step="1" />
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('marketOperation', 1, this)">Buy</button>
+            <button class="toggle-button" onclick="toggleButton('marketOperation', -1, this)">Sell</button>
+          </div> </div>
+    `;
+        }
+        if (policyType === "fiscal" || policyType === "both") {
+          inputsHTML += `
+     
+      <label for="taxChange">Tax Change (%):</label>
+      <div class="toggle-container">
+          <input type="number" id="taxChange" min="0" step="0.01" />
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('taxChange', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('taxChange', -1, this)">-</button>
+          </div>  </div>
+      <label for="govSpending">Government Spending (%):</label>
+      <div class="toggle-container">
+          <input type="number" id="govSpending" step="1" min="0" />
+          <div class="button-container">
+            <button class="toggle-button" onclick="toggleButton('govSpending', 1, this)">+</button>
+            <button class="toggle-button" onclick="toggleButton('govSpending', -1, this)">-</button>
+          </div>  </div>
+    `;
+        }
+
+        gameInputsContainer.innerHTML = inputsHTML;
+
+        // Restore previously selected button colors and input values after refreshing the UI
+        Object.keys(selectedButtons).forEach((inputId) => {
+          const selectedButton = selectedButtons[inputId];
+          if (selectedButton) {
+            selectedButton.style.backgroundColor =
+              selectedButton.value > 0 ? "blue" : "red";
+          }
+          if (inputValues[inputId] !== undefined) {
+            document.getElementById(inputId).value = Math.abs(
+              inputValues[inputId]
+            );
+          }
+        });
+      }
+      function getInputValue(id) {
+        if (selectedButtons[id]) {
+          // Return the internally stored value (positive or negative based on button)
+          return inputValues[id];
+        } else {
+          // If no button is selected, treat it as a positive number
+          const input = document.getElementById(id);
+          return Math.abs(parseFloat(input.value) || 0); // Default to positive value
+        }
+      }
+
+      function toggleButton(id, value, button) {
+        const input = document.getElementById(id);
+
+        // Get the current value, consider it positive by default
+        let currentValue = parseFloat(input.value) || 0;
+
+        // If no button has been pressed for this input, assume the value is positive
+        if (!(id in selectedButtons)) {
+          inputValues[id] = Math.abs(currentValue); // Default to positive
+        }
+
+        // Apply the corresponding sign (+ or -) based on the pressed button
+        if (selectedButtons[id] !== button) {
+          inputValues[id] =
+            value > 0 ? Math.abs(currentValue) : -Math.abs(currentValue);
+        }
+
+        // Reset the color of the previously selected button (if any)
+        if (selectedButtons[id]) {
+          selectedButtons[id].style.backgroundColor = "";
+        }
+
+        // Track the currently selected button and set its color
+        selectedButtons[id] = button;
+        button.style.backgroundColor = value > 0 ? "blue" : "red";
+
+        // Always show the positive value in the input field
+        input.value = Math.abs(inputValues[id]);
+      }
+
+      function playGame() {
+        initialGDP = realGDP || initialGDP;
+        initialUnemployment = unemployment || initialUnemployment;
+        initialInflation = inflation || initialInflation;
+
+        displayInitialValues();
+        // console.log(initialGDP, initialUnemployment, initialInflation);
+
+        const discountRate =
+          inputValues["discountRate"] ||
+          (document.getElementById("discountRate")
+            ? document.getElementById("discountRate").value
+            : 0);
+        const reserveRequirement =
+          inputValues["reserveRequirement"] ||
+          (document.getElementById("reserveRequirement")
+            ? document.getElementById("reserveRequirement").value
+            : 0);
+        const marketOperation =
+          inputValues["marketOperation"] ||
+          (document.getElementById("marketOperation")
+            ? document.getElementById("marketOperation").value
+            : 0);
+
+        const taxChange =
+          inputValues["taxChange"] ||
+          (document.getElementById("taxChange")
+            ? document.getElementById("taxChange").value
+            : 0);
+        const govSpending =
+          inputValues["govSpending"] ||
+          (document.getElementById("govSpending")
+            ? document.getElementById("govSpending").value
+            : 0);
+
+        realGDP = (
+          initialGDP -
+          discountRate / (3 * R) -
+          reserveRequirement / (2.1 * R) +
+          marketOperation / (1.6 * R) -
+          taxChange / (4 * R) +
+          govSpending / (2.6 * R)
+        ).toFixed(2);
+
+        unemployment = (
+          parseFloat(initialUnemployment) +
+          discountRate / (2 * R) +
+          reserveRequirement / (2.2 * R) -
+          marketOperation / (1.8 * R) +
+          taxChange / (4.1 * R) -
+          govSpending / (2.8 * R)
+        ).toFixed(2);
+
+        inflation = (
+          initialInflation -
+          discountRate / (4 * R) +
+          reserveRequirement / (1.9 * R) +
+          marketOperation / (1.5 * R) -
+          taxChange / (2.1 * R) +
+          govSpending / (1.9 * R)
+        ).toFixed(2);
+
+        if (isNaN(unemployment)) {
+          unemployment = 0;
+        }
+
+        realGDP = realGDP;
+        if (unemployment < 0) {
+          unemployment = 0;
+        } else {
+          unemployment = unemployment;
+        }
+        inflation = inflation;
+
+        document.getElementById("outputGDP").textContent = realGDP;
+        document.getElementById("outputUnemployment").textContent =
+          unemployment;
+        document.getElementById("outputInflation").textContent = inflation;
+        document.getElementById("gameOutputs").style.display = "block";
+
+        iteration++;
+
+        // show all results
+
+        resultObj = {
+          Year: iteration,
+          GDP: realGDP,
+          Unemployment: unemployment,
+          Inflation: inflation,
+        };
+
+        results.push(resultObj);
+        UpdateTable();
+
+        // console.log(results);
+
+        // update all results on browser
+
+        updateProgress();
+
+        setTimeout(() => {
+          // Check for winning criteria or update this to your own criteria
+          if (
+            realGDP > 2 &&
+            unemployment < 4 &&
+            inflation > 0 &&
+            inflation < 3
+          ) {
+            alertt("Congratulations! You've Stabilized the Economy!");
+            document.getElementById("submitButton").disabled = true;
+            document.getElementById("outputGDP2").textContent = realGDP;
+            document.getElementById("outputUnemployment2").textContent =
+              unemployment;
+            document.getElementById("outputInflation2").textContent = inflation;
+
+            /*  resetGame(); // Reset game after win */
+            return;
+          }
+          // Check if years are complete
+
+          if (iteration >= 10) {
+            alertt();
+            // disable submit btn
+            document.getElementById("submitButton").disabled = true;
+            document.getElementById("outputGDP2").textContent = realGDP;
+            document.getElementById("outputUnemployment2").textContent =
+              unemployment;
+            document.getElementById("outputInflation2").textContent = inflation;
+            // document.getElementById("gameOutputs").style.display = "block";
+
+            //   resetGame();
+            //   resetGame(); // Reset game after alert
+          }
+        }, 200);
+      }
+
+      function updateProgress() {
+        const progressBar = document.getElementById("progressBarFill");
+        const iterationCount = document.getElementById("iterationCount");
+
+        progressBar.style.width = (iteration * 10).toString() + "%";
+        //   progressBar.textContent = (iteration * 10).toString() + "%";
+        iterationCount.textContent = iteration;
+      }
+
+      function resetGame() {
+        document.getElementById("policyType").value = "";
+        document.getElementById("economicCondition").value = "";
+        document.getElementById("initialValues").style.display = "none";
+        document.getElementById("gameInputs").style.display = "none";
+        document.getElementById("buttons").style.display = "none";
+        document.getElementById("progress").style.display = "none";
+        document.getElementById("gameOutputs").style.display = "none";
+        iteration = 0;
+        selectedButtons = {}; // Clear selected buttons on reset
+        inputValues = {}; // Clear fixed input values on reset
+        // clear progress bar
+        const iterationCount = document.getElementById("iterationCount");
+        iterationCount.textContent = iteration;
+
+        //reset stored values
+        results = [];
+        document
+          .getElementById("resultTable")
+          .classList.remove("result-container");
+
+        UpdateTable();
+
+        // remove overlay and alert on reset
+        const alertOverlay = document.getElementById("customAlertOverlay");
+        const alertMessage = document.getElementById("alertMessage");
+
+        // Set the custom message in the alert
+        //   alertMessage.textContent = message;
+
+        // Display the custom alert
+        alertOverlay.style.display = "none";
+
+        // Enable the submit button
+        document.getElementById("submitButton").disabled = false;
+      }
+      // Function to trigger the custom alert with a message (Game Over or You Win)
+      function alertt(message) {
+        const alertOverlay = document.getElementById("customAlertOverlay");
+        const alertMessage = document.getElementById("alertMessage");
+
+        // reset btn below progress bar
+        document.getElementById("submitButton").disabled = true;
+        document.getElementById("outputGDP2").textContent = realGDP;
+        document.getElementById("outputUnemployment2").textContent =
+          unemployment;
+        document.getElementById("outputInflation2").textContent = inflation;
+
+        // Set the custom message in the alert
+        alertMessage.textContent = message;
+
+        // Display the custom alert
+        alertOverlay.style.display = "flex";
+      }
+
+      // Function to reset the game
+
+      // Function to update the table dynamically
+      // Initial array with objects
+
+      // Function to update the table dynamically
+
+      function UpdateTable() {
+        const tableContainer = document.getElementById("dynamic-table");
+        tableContainer.innerHTML = ""; // Clear any existing content
+
+        // Check if there is any results in the array
+        if (results.length > 0) {
+          document
+            .getElementById("resultTable")
+            .classList.add("result-container");
+          // Create the header row (keys of the first object)
+          const headerRow = document.createElement("div");
+          headerRow.classList.add("result-row", "header-row");
+          Object.keys(results[0]).forEach((key) => {
+            const headerCell = document.createElement("div");
+            headerCell.textContent = key;
+            headerCell.classList.add("result-cell", "hcell");
+            headerRow.appendChild(headerCell);
+          });
+          tableContainer.appendChild(headerRow);
+
+          // Create rows for the results
+          results.forEach((item) => {
+            const row = document.createElement("div");
+            row.classList.add("result-row");
+            Object.values(item).forEach((value) => {
+              const cell = document.createElement("div");
+              cell.textContent = value;
+              cell.classList.add("result-cell");
+              row.appendChild(cell);
+            });
+            tableContainer.appendChild(row);
+          });
+        }
+      }
+
+      // Call UpdateTable initially to populate the table
+
+      // Call UpdateTable initially to populate the table
+    </script>
+  </body>
+</html>
